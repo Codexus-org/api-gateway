@@ -9,6 +9,6 @@ app.use("/threads-services", createProxyMiddleware({ target: "http://localhost:8
 
 app.use("/replies-services", createProxyMiddleware({ target: "http://localhost:8000" }));
 
-app.listen(3000, () => {
+app.listen(3001, () => {
   console.log("users service listening on port 3000");
 });
