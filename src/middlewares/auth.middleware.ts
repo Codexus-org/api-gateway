@@ -13,14 +13,15 @@ export async function verifyAccessToken ( req: Request, res: Response, next: Nex
                 body: JSON.stringify({ accessToken, refreshToken })
             }
         );
+        
+        const userData = await authorizeUser.json();
+        const data = userData.data;
+        console.log(userData);
+        console.log('auth middleware: ',data);
 
-        if (!authorizeUser.ok) {
-            const error = await authorizeUser.json();
-            throw new Error(error.message);
-        }
-
-        next();
+        // next();
     } catch (error) {
-        next(error);
+        // next(error);
+        console.log(error);
     }
 }
