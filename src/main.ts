@@ -13,7 +13,7 @@ app.use("/auth",
 );
 
 app.use("/users-services",
-  verifyAccessToken,
+  // verifyAccessToken,
   createProxyMiddleware({
     target: "http://localhost:8002/forumapp/api/v1/users-services",
   })
@@ -21,7 +21,7 @@ app.use("/users-services",
 
 app.use("/threads-services",
   createProxyMiddleware({ 
-    target: "http://localhost:8001",
+    target: "http://localhost:8001/forumapp/api/v1/threads-services",
   })
 );
 
