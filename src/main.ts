@@ -1,7 +1,6 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import { createProxyMiddleware } from "http-proxy-middleware";
-import { verifyAccessToken } from "./middlewares/auth.middleware";
 
 const app = express();
 app.use(cookieParser());
@@ -13,7 +12,6 @@ app.use("/auth",
 );
 
 app.use("/users-services",
-  // verifyAccessToken,
   createProxyMiddleware({
     target: "http://localhost:8002/forumapp/api/v1/users-services",
   })
