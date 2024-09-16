@@ -3,6 +3,11 @@ import jwt from 'jsonwebtoken';
 
 export async function verifyAccessToken ( req: Request, res: Response, next: NextFunction ) {
     const { accessToken, refreshToken } = req.cookies;
+
+    if (!accessToken) {
+      return res.status(401).json({ message: "Unauthorized: No access token provided. Please log in first." });
+    }
+
     try {
         const authorizeUser = await fetch(`http://localhost:3001/auth/verify-token`,
             {
@@ -19,9 +24,13 @@ export async function verifyAccessToken ( req: Request, res: Response, next: Nex
         console.log(userData);
         console.log('auth middleware: ',data);
 
-        // next();
-    } catch (error) {
-        // next(error);
-        console.log(error);
+        if (!authorizeUser.ok) {
+            const error = await authorizeUser.json();
+            throw new Error(error.message);
+        }
+
+        next();
+    } catch (error: any) {
+      return res.status(401).json({ message: error.message });
     }
 }
